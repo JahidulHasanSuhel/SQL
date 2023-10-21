@@ -1,0 +1,79 @@
+create database db1;
+use db1;
+
+create table students(
+stu_id int primary key,
+stu_name varchar(25),
+age int, gender char(1), doa date, city varchar(20));
+
+insert into students values 
+(101, "Joseph", 22, "M", "2020-11-18", "pune"),
+(102, "Nilesh", 21, "M", "2020-11-18", "New York"),
+(103, "Vipul", 33, "M", "2020-11-18", "Miami"),
+(104, "Anubhav", 61, "M", "2020-11-18", "Pune"),
+(105, "Utkarsh", 45, "M", "2020-11-18", "New York"),
+(106, "Ishan", 44, "M", "2020-11-18", "Miami"),
+(107, "Ankit", 52, "M", "2020-11-18", "Chicago"),
+(108, "Akshay", 36, "M", "2020-11-18", "pune"),
+(109, "Akash", 28, "M", "2020-11-18", "New York"),
+(110, "Tanishq", 19, "M", "2020-11-18", "Miami"),
+(111, "Raghav", 24, "M", "2020-11-18", "Detroit"),
+(112, "Anand", 54, "M", "2020-11-18", "pune"),
+(113, "Amrit", 43, "M", "2020-11-18", "Miami"),
+(114, "Andrew", 18, "M", "2020-11-18", "Boston"),
+(115, "Ricky", 26, "M", "2020-11-18", "Detroit"),
+(116, "Cummins", 30, "M", "2020-11-18", "Chicago"),
+(117, "Rabada", 40, "M", "2020-11-18", "Boston"), 
+(118, "Johnson", 55, "M", "2020-11-18", "New York"),
+(119, "Adam", 45, "M", "2020-11-18", "Boston"),
+(120, "Illeana", 25, "F", "2020-11-18", "Chicago");
+
+
+select * from students;
+
+select stu_name, age, city from students;
+
+#where
+select * from students where city = 'pune';
+
+select * from students where city = 'Miami' and gender = 'M';
+
+select * from students where city = 'Boston' or city = 'Chicago';
+
+select * from students where not city = 'Chicago';
+
+#Group by
+select city, count(stu_id) as total_students
+from students group by city;
+
+#Having
+select city, count(stu_id) as total_students
+from students group by city
+having count(stu_id) > 3;
+
+#Order by
+select * from students order by city;
+
+select * from students order by city desc;
+
+#String functions
+
+select upper('Bangladesh') as upper_case;
+
+select lower('Bangladesh') as lower_case;
+
+select lcase('Bangladesh') as lower_case;
+
+select stu_name, char_length(stu_name) as total_len 
+from students;
+
+select concat("Bd", " is", " in asia") as merged;
+
+select stu_id, stu_name, concat(stu_name, " ", age) as name_age 
+from students;
+
+select reverse("Bangladesh");
+
+select reverse(stu_name) from students;
+
+select replace("Orange is a vegetable", "vegetable", "fruit");
