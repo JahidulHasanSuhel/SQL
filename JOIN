@@ -1,0 +1,101 @@
+/*
+Code written by Suhel.
+*/
+create database DB1;
+use db1;
+create table employee (
+id int primary key,
+fname varchar(25),
+lname varchar(20),
+age int,
+phNO int,
+city varchar (15));
+
+drop database db1;
+drop table client;
+drop table employee;
+drop table project;
+
+
+insert into employee
+values (1, 'Aman', 'proto', 32, 3333, 'Delhi'),
+	   (2, 'yagya', 'narayan',44, 3333, 'palam'),
+       (3, 'rahul', 'bd', 32, 33, 'kolkata'),
+       (4, 'jatin', 'hermit', 32, 43, 'jaipur'),
+       (5, 'pk', 'pandey', 32, 54, 'raipur');
+       
+create table project (
+id int primary key,
+empID int,
+naam varchar(23),
+clintID int,
+foreign key(empID) references employee(id), 
+foreign key (clintID) references client(id)
+);
+
+
+insert into project 
+values (1, 1, 'a', 3),
+       (2, 2, 'b', 1),
+       (3, 3, 'c', 5),
+       (4, 3, 'd', 2),
+       (5, 5, 'e', 4);
+       
+ #for replace any data from any table;      
+replace into project set id = 4, empID = 4;
+
+create table client (
+id int primary key,
+first_name varchar(15),
+last_name varchar(23),
+age int,
+phNO int,
+city varchar(23),
+empID int);
+
+insert into client 
+values (1, 'mac', 'rogers', 20, 5555, 'kolkata', 3),
+       (2, 'max', 'poirier', 30, 4444, 'kolkata', 3),
+       (3, 'peter', 'jain', 40, 4645, 'delhi', 1),
+       (4, 'sushant', 'agarwal', 5656, 5555, 'hydrabaad', 5),
+       (5, 'pratap', 'singh', 26, 2656, 'mumbai', 2);
+
+
+#inner join
+#enlist all the employees id's, names, along with the project allocated to them
+
+select e.id, e.fname, e.lname, p.id, p.naam from employee as e
+inner join project as p on e.id = p.empID;
+
+#join use without join keyword
+select e.id, e.fname, e.lname, p.id, p.naam from employee as e,
+project as p where e.id = p.empID;
+
+select * from employee as e
+inner join project as p on e.id = p.empID;
+
+
+#fetch out all the employee id's and their contact details who have been working
+#from jaipur with the clients name working in haydrabaad.
+select e.id, e.phNO, c.first_name, c.last_name from employee as e 
+inner join client as c 
+on e.id = c.empID where e.city = 'jaipur' and c.city = 'hydrabaad';
+
+
+#left join
+#fetch out each project allocated with each employee.
+select * from employee as e
+left join project as p on e.id = p.empID;
+
+
+ #right join
+ #list out all the projects along with the employee's name and their respective allocated phone no.
+ select p.id, p.naam, e.fname, e.lname, e.phNO from employee as e
+ right join project as p 
+ on e.id = p.empID;
+ 
+ #cross join
+ #list out all the combinations possible for the employee's name and projects that can exist.
+ select e.fname, e.lname, p.id, p.naam from employee as e
+ cross join project as p;
+ 
