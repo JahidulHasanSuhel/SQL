@@ -1,0 +1,49 @@
+create database db;
+use db;
+
+create table dept1(
+empid int primary key,
+name varchar(25),
+role varchar(25));
+
+
+create table dept2(
+empid int primary key,
+name varchar(25),
+role varchar(25));
+
+insert into dept1 
+values (1, 'A', 'engineer'),
+       (2, 'B', 'salesman'),
+       (3, 'C', 'manager'),
+       (4, 'D', 'salesman'),
+       (5, 'E', 'engineer');
+
+
+insert into dept2 
+values (3, 'C', 'manager'),
+       (6, 'F', 'marketing'),
+       (7, 'G', 'salesman');
+       
+       
+#set operations
+#list out all the employees in the company
+select * from dept1
+UNION
+select * from dept2;
+
+#list out all the employees in all departments who work as salesman
+select * from dept1 where role = 'salesman'
+UNION
+select * from dept2 where role = 'salesman';
+
+#list out all the employees who works in all the dept
+#INTERSECT set operation
+#below both 2 are works good
+select * from dept1 INNER JOIN dept2 using(empid); 
+select dept1.* from dept1 INNER JOIN dept2 using(empid);
+
+#list out all the employees working in dept1 but not in dept2
+#MINUS set operation
+select dept1.* from dept1 LEFT JOIN dept2 using(empid)
+WHERE dept2.empid is NULL;
